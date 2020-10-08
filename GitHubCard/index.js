@@ -1,8 +1,16 @@
+
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+let resultArray = [];
+axios
+ .get(`https://api.github.com/users/somersgreg`)
+ .then((result) => {
+   console.log('you did it: ', result.data);
+ }) // works
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
