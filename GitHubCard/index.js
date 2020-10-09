@@ -6,12 +6,23 @@ import axios from 'axios'
 */
 axios
  .get(`https://api.github.com/users/somersgreg`)
- .then((result) => {
-   console.log('this is your data: ', result.data);
- }) // works
+
+//  .then((response.data) => {
+  //  console.log('this is your data: ', response);
+//  })
+ .then(response => {
+  console.log(response);
+  const entryPoint = document.querySelector(".cards");
+  console.log(entryPoint);
+  entryPoint.appendChild(makeCard(response));
+})
+  // works. Targeting data to get just what I need. But dont see img.
  .catch((error) => {
    console.log('this didnt work:', error);
- }); // works
+ });
+
+
+ // works. Change url to an error and it displays.
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -58,6 +69,46 @@ const followersArray = [];
       </div>
     </div>
 */
+const makeCard = response => {
+  //Main Div
+  let newCard = document.createElement("div");//the let makes readable
+  newCard.classList.add("card");//create whole div
+  // IMG
+  let avatar = document.createElement("img");
+  avatar.setAttribute("src", response.data.avatar_url);//top of list!
+  newCard.appendChild(avatar);//appending as i go instead of grouping phases
+  // Inner Div (card-info)
+  let innerDiv = document.createElement("div");
+  innerDiv.classList.add("card-info");//contain info.
+  newCard.appendChild(innerDiv);
+  // Real Name
+  let nameTag = document.createElement("h3");
+  nameTag.textContent = response.name;
+  nameTag.classList.add("name");//h3 called class name
+  newCard.appendChild(nameTag);
+  // Username
+  let userTag = document.createElement("p");
+  userTag.textContent = response.data.login;
+  userTag.classList.add("username");//p called class username
+  newCard.appendChild(userTag);
+  // Location
+  let local = document.createElement("p");
+  local.textContent = `Location: ${response.data.location}`;
+  newCard.appendChild(local);//no class
+  // Profile URL p
+  let profile = document.createElement("p");
+  profile.textContent = `Profile:  `;
+  newCard.appendChild(profile);
+  // Profile URL
+  let profileUrl = document.createElement("a");
+  profileUrl.textContent = `${response.data.html_url}`;//just for show
+  profileUrl.setAttribute("href",response.data.html_url);
+  newCard.appendChild(profileUrl);
+
+  return newCard;
+}
+
+
 
 /*
   List of LS Instructors Github username's:
